@@ -1,0 +1,114 @@
+---
+title: "A glimps of the package morphRiver"
+author: "L.Vaudor"
+date: "4 decembre 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Data
+
+Let us consider points (loaded from a shapefile) and a DEM (loaded from a .tif file)
+
+```{r}
+points=st_read(system.file("data/points.shp", package="morphRiver"))
+rasterDEM=raster(system.file("data/rasterDEM.tif", package="morphRiver"))
+```
+
+Here is a view of the data in these files
+
+```{r, fig.height=8}
+plot(rasterDEM)
+plot(points,
+     add=TRUE, col=1)
+```
+
+# Curvature
+
+## Calculate curvature
+
+Only the set of points is needed to calculate curvature:
+
+```{r}
+rcurv=curvature(points) %>% points_to_linestring()
+print(rcurv)
+```
+
+## Show result
+
+### on map
+
+```{r, fig.height=8}
+plot(rasterDEM)
+plot(points,
+     add=TRUE, col=1)
+plot(rcurv["C"],
+    add=TRUE, lwd=3)
+```
+
+### as longitudinal signal
+
+```{r, fig.height=4, fig.width=8}
+library(ggplot2)
+ggplot(data=rcurv, aes(x=S,y=C))+
+  geom_path()
+```
+
+# Calculate basin width
+
+## Calculate elevation
+
+To calculate the elevation we need the set of points as well as the raster DEM
+
+```{r}
+relev=elevation(points,rasterDEM) %>% points_to_linestring()
+print(relev)
+```
+
+## Transects
+
+Calculating the basin width requires calculating the series transects going through our points:
+
+```{r, fig.height=8}
+plot(rasterDEM)
+plot(points,
+      add=TRUE, col=1)
+plot(points_to_linestring(points),
+    add=TRUE, col=2)
+plot(transects(points,500),
+     add=TRUE, col=4)
+```
+
+## Basin width
+
+To calculate the basin width we'll need to provide both the points and the DEM raster (the function `transects()` is used internally):
+
+```{r}
+rwidth=basin_width(points,rasterDEM, radius=500)
+print(rwidth)
+```
+
+
+## Show result
+
+
+
+### on map
+
+```{r, fig.height=8}
+plot(rasterDEM)
+plot(rwidth,
+    add=TRUE, col=4, lwd=3)
+```
+
+### as longitudinal signal
+
+```{r}
+library(ggplot2)
+ggplot(data=rwidth, aes(x=S,y=W))+
+ geom_path()
+```
+

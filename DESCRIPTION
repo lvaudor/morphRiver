@@ -4,8 +4,8 @@ Title: Calculate the Metrics describing the Morphology of a River (Curvature, Wi
 Version: 0.1.0
 Author: Lise Vaudor
 Maintainer: Lise Vaudor <lise.vaudor@ens-lyon.fr>
-Description: This package helps with the calculation of metrics that help describe the morphology of a river (curvature, width, etc.)
-Depends: dplyr, sf, raster
+Description: This package helps with the calculation of some metrics describing the morphology of a river (curvature, width, etc.)
+Depends: dplyr, sf, raster, tidyr
 License: GNU GPL-v2
 Encoding: UTF-8
 LazyData: true
