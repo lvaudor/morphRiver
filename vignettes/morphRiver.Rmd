@@ -26,6 +26,13 @@ plot(points,
      add=TRUE, col=1)
 ```
 
+We'll now use the package `morphRiver`:
+
+```{r}
+library(morphRiver)
+```
+
+
 # Curvature
 
 ## Calculate curvature

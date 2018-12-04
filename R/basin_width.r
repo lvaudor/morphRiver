@@ -54,7 +54,7 @@ basin_width=function(points_sf,rasterDEM, radius){
                   geom=geom)
       return(tibW)
   }
-  coords=st_coordinates(points_sf)
+  coords=st_coordinates(points_sf) %>% as_tibble()
   tibW <- transects(points_sf, radius) %>%
     st_coordinates() %>%
     as_tibble() %>%
