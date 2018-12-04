@@ -27,7 +27,7 @@ rasterDEM=raster(system.file("data/rasterDEM.tif", package="morphRiver"))
 
 Here is a view of the data in these files
 
-```{r, fig.height=8}
+```{r}
 plot(rasterDEM)
 plot(points,
      add=TRUE, col=1)
@@ -49,7 +49,7 @@ print(rcurv_points)
 
 ### ... on a map
 
-```{r, fig.height=8}
+```{r}
 plot(rasterDEM)
 plot(rcurv_points["C"],
      add=TRUE, cex=2, pch=20)
@@ -86,7 +86,7 @@ transects_sf
 ```
 
 
-```{r, fig.height=8}
+```{r}
 plot(rasterDEM)
 plot(points,
       add=TRUE, col=1)
@@ -108,7 +108,7 @@ print(rwidth)
 
 ### ... on a map
 
-```{r, fig.height=8}
+```{r}
 plot(rasterDEM)
 plot(rwidth,
      add=TRUE, col=4, lwd=3)
