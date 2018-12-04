@@ -6,8 +6,15 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
 ```
+
+We'll use the package `morphRiver` thoughout this document:
+
+```{r}
+library(morphRiver)
+```
+
 
 # Data
 
@@ -26,13 +33,6 @@ plot(points,
      add=TRUE, col=1)
 ```
 
-We'll now use the package `morphRiver`:
-
-```{r}
-library(morphRiver)
-```
-
-
 # Curvature
 
 ## Calculate curvature
@@ -40,27 +40,28 @@ library(morphRiver)
 Only the set of points is needed to calculate curvature:
 
 ```{r}
-rcurv=curvature(points) %>% points_to_linestring()
-print(rcurv)
+rcurv_points=curvature(points)
+rcurv_line=rcurv_points %>% points_to_linestring()
+print(rcurv_points)
 ```
 
 ## Show result
 
-### on map
+### ... on a map
 
 ```{r, fig.height=8}
 plot(rasterDEM)
-plot(points,
-     add=TRUE, col=1)
-plot(rcurv["C"],
+plot(rcurv_points["C"],
+     add=TRUE, cex=2, pch=20)
+plot(rcurv_line["C"],
     add=TRUE, lwd=3)
 ```
 
-### as longitudinal signal
+### ... as longitudinal signal
 
 ```{r, fig.height=4, fig.width=8}
 library(ggplot2)
-ggplot(data=rcurv, aes(x=S,y=C))+
+ggplot(data=rcurv_points, aes(x=S,y=C))+
   geom_path()
 ```
 
@@ -105,7 +106,7 @@ print(rwidth)
 
 ## Show result
 
-### on map
+### ... on a map
 
 ```{r, fig.height=8}
 plot(rasterDEM)
@@ -113,7 +114,7 @@ plot(rwidth,
      add=TRUE, col=4, lwd=3)
 ```
 
-### as longitudinal signal
+### ... as longitudinal signal
 
 ```{r}
 library(ggplot2)
