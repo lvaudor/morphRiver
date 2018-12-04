@@ -89,7 +89,7 @@ transects_sf
 plot(rasterDEM)
 plot(points,
       add=TRUE, col=1)
-plot(transects,
+plot(transects_sf,
      add=TRUE, col=4)
 ```
 
@@ -105,14 +105,12 @@ print(rwidth)
 
 ## Show result
 
-
-
 ### on map
 
 ```{r, fig.height=8}
 plot(rasterDEM)
 plot(rwidth,
-    add=TRUE, col=4, lwd=3)
+     add=TRUE, col=4, lwd=3)
 ```
 
 ### as longitudinal signal
