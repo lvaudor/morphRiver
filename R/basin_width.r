@@ -65,7 +65,7 @@ basin_width=function(points_sf,rasterDEM, radius){
     bind_rows()
   widths_sf=widths %>% dplyr::select(-geom) %>%
     mutate(S=tibW$S) %>%
-    dplyr::select(S,W,geometry)
+    dplyr::select(S,W)
   widths_sf$geometry=st_as_sfc(widths$geom)
   widths_sf=st_as_sf(widths_sf)
   return(widths_sf)
