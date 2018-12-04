@@ -1,5 +1,5 @@
 #' Calculates the elevation at each point of a series based on a DEM raster
-#' @param points a sf object with multiple features with POINT geometry
+#' @param points_sf a sf object with multiple features with POINT geometry
 #' @param rasterDEM a raster object giving elevations
 #' @return a sf object with multiple features with POINT geometry and attributes corresponding to curvilinear coordinate (S) and elevation (Z))
 #' @export
@@ -18,9 +18,9 @@
 #'   geom_path()
 
 
-elevation=function(points,rasterDEM){
-  coords=st_coordinates(points) %>% as_tibble()
-  data <- points %>%
+elevation=function(points_sf,rasterDEM){
+  coords=st_coordinates(points_sf) %>% as_tibble()
+  data <- points_sf %>%
     mutate(X=coords$X,
            Y=coords$Y) %>%
     mutate(d1=X-lag(X,1),

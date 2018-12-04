@@ -1,5 +1,5 @@
 #' Calculates the perpendicular transects to a series of points
-#' @param points a sf object with multiple features with POINT geometry
+#' @param points_sf a sf object with multiple features with POINT geometry
 #' @param radius the radius to consider for the transect
 #' @return a sf object with multiple features with LINESTRING geometry, corresponding to transects
 #' @export
@@ -15,7 +15,7 @@
 #' plot(transects(points,500),
 #'      add=TRUE, col=4)
 
-transects=function(points, radius){
+transects=function(points_sf, radius){
     qs=function(A,B,C){
       solns=tibble(soln1=as.complex(NA),soln2=as.complex(NA))
       if(!is.na(A)&!is.na(B)&!is.na(C)){
@@ -29,8 +29,8 @@ transects=function(points, radius){
       }
       return(solns)
     }
-    coords=st_coordinates(points) %>% as_tibble()
-    result <- points %>%
+    coords=st_coordinates(points_sf) %>% as_tibble()
+    result <- points_sf %>%
       mutate(X=coords$X,
              Y=coords$Y) %>%
       mutate(xA=lag(X,1),
@@ -63,7 +63,7 @@ transects=function(points, radius){
                              .$xP2," ",.$yP2, ")"))
     geom=result$geom
 
-    transects=as_tibble(points) %>%
+    transects=as_tibble(points_sf) %>%
       slice(2:(n()-1))
     transects$geometry=st_as_sfc(geom)
     transects=st_as_sf(transects)

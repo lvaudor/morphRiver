@@ -1,5 +1,5 @@
 #' Calculates the curvature at each point of a series
-#' @param points a sf object with multiple features with POINT geometry
+#' @param points_sf a sf object with multiple features with POINT geometry
 #' @return a sf object with multiple features with POINT geometry and attributes corresponding to curvilinear coordinate (S) and curvature (C)
 #' @export
 #' @examples
@@ -17,9 +17,9 @@
 #' ggplot(data=rcurv, aes(x=S,y=C))+
 #'   geom_path()
 
-curvature=function(points){
-    coords=st_coordinates(points) %>% as_tibble()
-    result <- points   %>%
+curvature=function(points_sf){
+    coords=st_coordinates(points_sf) %>% as_tibble()
+    result <- points_sf   %>%
       mutate(X=coords$X,
              Y=coords$Y) %>%
       mutate(d1=X-lag(X,1),

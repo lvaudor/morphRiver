@@ -1,5 +1,5 @@
 #' Calculates the curvature at each point of a series
-#' @param points a sf object with multiple features with POINT geometry
+#' @param points_sf a sf object with multiple features with POINT geometry
 #' @return a sf object with multiple features with POINT geometry and attributes corresponding to curvilinear coordinate (S) and curvature (C)
 #' @export
 #' @examples
@@ -9,17 +9,17 @@
 #'plot(points_to_linestring(points),
 #'     add=TRUE, col=2)
 
-points_to_linestring=function(points){
-  coords=st_coordinates(points) %>% as_tibble()
-  point_data=points %>%
+points_to_linestring=function(points_sf){
+  coords=st_coordinates(points_sf) %>% as_tibble()
+  point_data=points_sf %>%
     mutate(X=coords$X,
            Y=coords$Y) %>%
     mutate(Xb=X+(lead(X,1)-X)/2,
            Yb=Y+(lead(Y,1)-Y)/2) %>%
     mutate(Xa=lag(Xb,1),
            Ya=lag(Yb,1)) %>%
-    mutate(id=1:nrow(points)) %>%
-    slice(2:(nrow(points)-1)) %>%
+    mutate(id=1:nrow(points_sf)) %>%
+    slice(2:(nrow(points_sf)-1)) %>%
     group_by(id) %>%
     tidyr::nest() %>%
     pull(data) %>%
@@ -28,8 +28,8 @@ points_to_linestring=function(points){
                        .$X," ",.$Y,",",
                        .$Xb," ",.$Yb,")")) %>%
     unlist()
-  result <- points %>%
-    slice(2:(nrow(points)-1)) %>%
+  result <- points_sf %>%
+    slice(2:(nrow(points_sf)-1)) %>%
     as_tibble() %>%
     dplyr::select(-geometry)
   result$geom=st_as_sfc(point_data)

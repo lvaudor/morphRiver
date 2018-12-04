@@ -1,5 +1,5 @@
 #' Calculates the transversal width of the basin immediately surrounding each point of a series
-#' @param points a sf object with multiple features with POINT geometry
+#' @param points_sf a sf object with multiple features with POINT geometry
 #' @param rasterDEM a raster object giving elevations
 #' @return a sf object with multiple features with POINT geometry and attributes corresponding to curvilinear coordinate (S) and curvature (C)
 #' @export
@@ -12,7 +12,7 @@
 #'      add=TRUE, col=4, lwd=3)
 
 
-basin_width=function(points,rasterDEM, radius){
+basin_width=function(points_sf,rasterDEM, radius){
 
   width_ind=function(data){
       matrixXY=tibble(X=seq(data$X[1],data$X[2],length.out=1000),
@@ -54,8 +54,8 @@ basin_width=function(points,rasterDEM, radius){
                   geom=geom)
       return(tibW)
   }
-  coords=st_coordinates(points)
-  tibW <- transects(points, radius) %>%
+  coords=st_coordinates(points_sf)
+  tibW <- transects(points_sf, radius) %>%
     st_coordinates() %>%
     as_tibble() %>%
     group_by(L1) %>%
