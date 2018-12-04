@@ -33,8 +33,6 @@ transects=function(points_sf, radius){
     result <- points_sf %>%
       mutate(X=coords$X,
              Y=coords$Y) %>%
-    mutate(X=coords$X,
-           Y=coords$Y) %>%
       mutate(d1=X-lag(X,1),
              d2=Y-lag(Y,1)) %>%
       mutate(S=sqrt(d1^2+d2^2)) %>%
@@ -71,7 +69,8 @@ transects=function(points_sf, radius){
     geom=result$geom
 
     transects=as_tibble(points_sf) %>%
-      slice(2:(n()-1))
+      slice(2:(n()-1)) %>%
+      mutate(S=result$S)
     transects$geometry=st_as_sfc(geom)
     transects=st_as_sf(transects)
     return(transects)

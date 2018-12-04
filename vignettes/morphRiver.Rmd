@@ -79,13 +79,17 @@ print(relev)
 
 Calculating the basin width requires calculating the series transects going through our points:
 
+```{r}
+transects_sf=transects(points,500)
+transects_sf
+```
+
+
 ```{r, fig.height=8}
 plot(rasterDEM)
 plot(points,
       add=TRUE, col=1)
-plot(points_to_linestring(points),
-    add=TRUE, col=2)
-plot(transects(points,500),
+plot(transects,
      add=TRUE, col=4)
 ```
 
