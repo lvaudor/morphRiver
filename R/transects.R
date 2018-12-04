@@ -33,6 +33,13 @@ transects=function(points_sf, radius){
     result <- points_sf %>%
       mutate(X=coords$X,
              Y=coords$Y) %>%
+    mutate(X=coords$X,
+           Y=coords$Y) %>%
+      mutate(d1=X-lag(X,1),
+             d2=Y-lag(Y,1)) %>%
+      mutate(S=sqrt(d1^2+d2^2)) %>%
+      mutate(S=c(0,S[2:length(S)])) %>%
+      mutate(S=cumsum(S)) %>%
       mutate(xA=lag(X,1),
              yA=lag(Y,1),
              xB=X,

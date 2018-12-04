@@ -54,7 +54,6 @@ basin_width=function(points_sf,rasterDEM, radius){
                   geom=geom)
       return(tibW)
   }
-  coords=st_coordinates(points_sf) %>% as_tibble()
   tibW <- transects(points_sf, radius) %>%
     st_coordinates() %>%
     as_tibble() %>%
@@ -63,13 +62,6 @@ basin_width=function(points_sf,rasterDEM, radius){
     pull("data") %>%
     purrr::map(width_ind) %>%
     bind_rows() %>%
-    mutate(X=coords$X,
-           Y=coords$Y) %>%
-    mutate(d1=X-lag(X,1),
-           d2=Y-lag(Y,1)) %>%
-    mutate(S=sqrt(d1^2+d2^2)) %>%
-    mutate(S=c(0,S[2:length(S)])) %>%
-    mutate(S=cumsum(S)) %>%
     dplyr::select(-X,-Y,-d1,-d2)
   widths=tibW %>% dplyr::select(-geom)
   widths$geometry=st_as_sfc(tibW$geom)
