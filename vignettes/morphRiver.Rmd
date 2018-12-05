@@ -1,5 +1,5 @@
 ---
-title: "A glimps of the package morphRiver"
+title: "A glimpse of the package morphRiver"
 author: "L.Vaudor"
 date: "4 decembre 2018"
 output: html_document
@@ -59,7 +59,7 @@ plot(rcurv_line["C"],
 
 ### ... as longitudinal signal
 
-```{r, fig.height=4, fig.width=8}
+```{r, fig.height=3, fig.width=5}
 library(ggplot2)
 ggplot(data=rcurv_points, aes(x=S,y=C))+
   geom_path()
@@ -116,7 +116,7 @@ plot(rwidth,
 
 ### ... as longitudinal signal
 
-```{r}
+```{r, fig.height=3, fig.width=5}
 library(ggplot2)
 ggplot(data=rwidth, aes(x=S,y=W))+
  geom_path()
