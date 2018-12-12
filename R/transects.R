@@ -73,5 +73,6 @@ transects=function(points_sf, radius){
       mutate(S=result$S)
     transects$geometry=st_as_sfc(geom)
     transects=st_as_sf(transects)
+    st_crs(transects)=st_crs(points_sf)
     return(transects)
 }
