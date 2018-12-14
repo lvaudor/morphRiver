@@ -33,7 +33,7 @@ curvature=function(points_sf){
                            d1<0 & d2<0  ~ phi-pi,
                            d1>0 ~ phi,
                            d1==0 & d2>0 ~ pi/2,
-                           d1==0 & d2<0 ~ pi/2,
+                           d1==0 & d2<0 ~ -pi/2,
                            d1==0 & d2==0 ~ 0)) %>%
       mutate(phi1=phi,
              phi2=lead(phi,1)) %>%
