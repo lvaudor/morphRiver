@@ -44,6 +44,7 @@ curvature=function(points_sf){
       mutate(C=case_when(change & cas2 > compl_cas2 ~ compl_cas2,
                          change & cas2<= compl_cas2 ~ cas2,
                          !change ~cas1)) %>%
-      dplyr::select(S,C)
+      dplyr::select(S,C) %>%
+      mutate(C=c(0,C[2:(length(C)-1)],0))
   return(result)
 }
