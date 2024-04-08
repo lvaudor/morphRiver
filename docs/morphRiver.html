@@ -43,7 +43,7 @@
 
 <p>Let us consider points (loaded from a shapefile) and a DEM (loaded from a .tif file)</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">points</span><span class="op">=</span><span class="fu">st_read</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"data/points.shp"</span>, package<span class="op">=</span><span class="st">"morphRiver"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">points</span><span class="op">=</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"data/points.shp"</span>, package<span class="op">=</span><span class="st">"morphRiver"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Reading layer `points' from data source `C:\Users\lvaudor\Documents\R\win-library\3.5\morphRiver\data\points.shp' using driver `ESRI Shapefile'</span></span>
 <span><span class="co">## Simple feature collection with 101 features and 1 field</span></span>
 <span><span class="co">## geometry type:  POINT</span></span>
@@ -52,21 +52,21 @@
 <span><span class="co">## epsg (SRID):    NA</span></span>
 <span><span class="co">## proj4string:    +proj=merc +lon_0=-43 +lat_ts=-2 +x_0=5000000 +y_0=10000000 +ellps=GRS80 +units=m +no_defs</span></span></code></pre>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">rasterDEM</span><span class="op">=</span><span class="fu">raster</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"data/rasterDEM.tif"</span>, package<span class="op">=</span><span class="st">"morphRiver"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">rasterDEM</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/raster.html" class="external-link">raster</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"data/rasterDEM.tif"</span>, package<span class="op">=</span><span class="st">"morphRiver"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Here is a view of the data in these files</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">rasterDEM</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">points</span>,</span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">rasterDEM</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">points</span>,</span>
 <span>     add<span class="op">=</span><span class="cn">TRUE</span>, col<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <div class="float">
 <img src="figure/unnamed-chunk-2-1.png" alt="plot of chunk unnamed-chunk-2"><div class="figcaption">plot of chunk unnamed-chunk-2</div>
 </div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">rasterDEM</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">points</span>,</span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">rasterDEM</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">points</span>,</span>
 <span>     add<span class="op">=</span><span class="cn">TRUE</span>, col<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
-<span><span class="va">rcurv</span><span class="op">=</span><span class="fu"><a href="reference/curvature.html">curvature</a></span><span class="op">(</span><span class="va">points</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="reference/points_to_linestring.html">points_to_linestring</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">rcurv</span><span class="op">[</span><span class="st">"C"</span><span class="op">]</span>,</span>
+<span><span class="va">rcurv</span><span class="op">=</span><span class="fu"><a href="reference/curvature.html">curvature</a></span><span class="op">(</span><span class="va">points</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="reference/points_to_linestring.html">points_to_linestring</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">rcurv</span><span class="op">[</span><span class="st">"C"</span><span class="op">]</span>,</span>
 <span>    add<span class="op">=</span><span class="cn">TRUE</span>, lwd<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <div class="float">
 <img src="figure/unnamed-chunk-3-1.png" alt="plot of chunk unnamed-chunk-3"><div class="figcaption">plot of chunk unnamed-chunk-3</div>
